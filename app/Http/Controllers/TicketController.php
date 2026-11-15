@@ -13,8 +13,15 @@ class TicketController extends Controller
             'status' => 'required|in:Open,In Progress,Resolved',
         ]);
 
-        $ticket->update(['status' => $data['status']]);
+        $becameResolved = $data['status'] === 'Resolved' && $ticket->status !== 'Resolved';
 
-        return back()->with('ok', 'Status is updated');
+        $ticket->update($data);
+
+        // Maintenance Ticket shesh hole Asset-er porer Due Date nije update hoi
+        if ($becameResolved && $ticket->source === 'Maintenance' && $ticket->asset) {
+            $ticket->asset->completeService();
+        }
+
+        return back()->with('ok', 'Status is Updated');
     }
 }

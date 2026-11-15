@@ -59,5 +59,24 @@ class AssetController extends Controller
         $svg = (new Writer($renderer))->writeString($url);
 
         return response($svg, 200, ['Content-Type' => 'image/svg+xml']);
+
+
+        // Warranty তারিখ বদলালে Email Alert আবার পাঠানোর যোগ্য হবে
+        if ($asset->isDirty('warranty_end')) {
+            $asset->warranty_notified_at = null;
+        }
+ 
+        $asset->save();
+ 
+        return back()->with('ok', "Asset {$asset->code} আপডেট হয়েছে।");
+    }
+
+
+    public function destroy(Asset $asset)
+    {
+        $code = $asset->code;
+        $asset->delete(); // এই Asset-এর সব Ticket-ও মুছে যায় (cascadeOnDelete)
+ 
+        return back()->with('ok', "Asset $code মুছে ফেলা হয়েছে।");
     }
 }

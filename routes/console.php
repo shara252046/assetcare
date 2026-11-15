@@ -1,8 +1,15 @@
 <?php
 
-use Illuminate\Foundation\Inspiring;
-use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Schedule;
 
-Artisan::command('inspire', function () {
-    $this->comment(Inspiring::quote());
-})->purpose('Display an inspiring quote');
+
+
+//maintenence check korar jonno use hoyeche 
+Schedule::command('maintenance:check')->dailyAt('07:00');
+
+
+//warranty alert, reguler nije cholbe;
+Schedule::command('warranty:alert')->dailyAt('08:00');
+
+
+
