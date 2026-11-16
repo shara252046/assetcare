@@ -16,7 +16,7 @@ table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:8px 6px;b
 </head>
 <body><div class="w">
 <h1>AssetCare</h1>
-<div class="nav np"><a href="{{ route('admin.home') }}">Assets ও Tickets</a><a href="{{ route('warranty.index') }}">Warranty</a><a href="{{ route('maintenance.index') }}">Maintenance</a></div>
+<div class="nav np"><a href="{{ route('dashboard') }}">Dashboard</a><a href="{{ route('admin.home') }}">Assets ও Tickets</a><a href="{{ route('warranty.index') }}">Warranty</a><a href="{{ route('maintenance.index') }}">Maintenance</a></div>
 
 <div class="c"><b>Warranty Tracker</b>
 <p class="s">৩০ দিনের মধ্যে শেষ হবে এমন Asset "Expiring soon" দেখায়। প্রতিদিন সকাল ৮টায় Email Alert যায়।</p>

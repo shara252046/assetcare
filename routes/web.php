@@ -5,6 +5,7 @@ use App\Http\Controllers\PublicReportController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\WarrantyController;
 use App\Http\Controllers\MaintenanceController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 // Public (without Login): QR Scan, Issue Report
@@ -24,6 +25,12 @@ Route::middleware('admin')->group(function () {
     Route::get('/maintenance', [MaintenanceController::class, 'index'])->name('maintenance.index');
     Route::patch('/maintenance/{asset:code}', [MaintenanceController::class, 'update'])->name('maintenance.update');
     Route::post('/maintenance/run', [MaintenanceController::class, 'run'])->name('maintenance.run');
+    
+    
+    //for dashboard.
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    
+    
     
     //new asset add kora and warrenty date
    /* Route::get('/fix-pc02', function () {

@@ -21,7 +21,7 @@ table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:8px 6px;b
 </head>
 <body><div class="w">
 <h1>AssetCare</h1>
-<div class="nav np"><a href="{{ route('admin.home') }}">Assets ও Tickets</a><a href="{{ route('warranty.index') }}">Warranty</a><a href="{{ route('maintenance.index') }}">Maintenance</a></div>
+<div class="nav np"><a href="{{ route('dashboard') }}">Dashboard</a><a href="{{ route('admin.home') }}">Assets ও Tickets</a><a href="{{ route('warranty.index') }}">Warranty</a><a href="{{ route('maintenance.index') }}">Maintenance</a></div>
 
 @if (session('ok'))<p class="ok np">{{ session('ok') }}</p>@endif
 @if ($errors->any())<p class="er np">{{ $errors->first() }}</p>@endif

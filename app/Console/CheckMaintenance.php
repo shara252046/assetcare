@@ -6,7 +6,7 @@ use App\Models\Asset;
 use App\Models\Ticket;
 use Illuminate\Console\Command;
 
-
+//Asset-এর "পরের Service Due" তারিখ এসে গেলে সিস্টেম নিজে একটি Ticket তৈরি করে। কেউ Issue Report করে না, Admin-ও হাতে Ticket বানায় না। এই কাজ করে CheckMaintenance নামের একটি Command।
 // ai pura file ta Maintenance Schedule + Auto Ticket er kaj korar time a make kora hoyeche
 
 
