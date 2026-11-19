@@ -5,18 +5,20 @@ namespace App\Http\Controllers;
 use App\Models\Asset;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class PublicReportController extends Controller
 {
     public function show(string $code)
     {
         $asset = Asset::where('code', $code)->firstOrFail();
-
         return view('report', ['asset' => $asset]);
     }
 
-    public function store(Request $request, string $code)
+
+
+
+    //for photo upload
+        public function store(Request $request, string $code)
     {
         $asset = Asset::where('code', $code)->firstOrFail();
 
@@ -24,20 +26,22 @@ class PublicReportController extends Controller
             'reporter' => 'nullable|string|max:60',
             'issue' => 'required|string|min:3|max:300',
             'priority' => 'required|in:Low,Medium,High',
+            'photo' => 'nullable|image|max:2048', // 🚨 FIX 5: Photo validation
         ]);
 
-        $ticket = DB::transaction(function () use ($asset, $data) {
-            $t = Ticket::create([
-                'asset_id' => $asset->id,
-                'issue' => $data['issue'],
-                'reporter' => $data['reporter'] ?: 'Anonymous',
-                'priority' => $data['priority'],
-                'status' => 'Open',
-            ]);
-            $t->update(['ticket_no' => 'T-' . (100 + $t->id)]);
+        $photoPath = $request->hasFile('photo')
+            ? $request->file('photo')->store('tickets', 'public')
+            : null;
 
-            return $t;
-        });
+        $ticket = Ticket::createNumbered([
+            'asset_id' => $asset->id,
+            'issue' => $data['issue'],
+            'reporter' => $data['reporter'] ?: 'Anonymous',
+            'priority' => $data['priority'],
+            'status' => 'Open',
+            'source' => 'Issue Report',
+            'photo' => $photoPath, // 🚨 FIX 5: Save photo path
+        ]);
 
         return back()->with('ok', 'Thanks! Ticket ' . $ticket->ticket_no . ' তৈরি হয়েছে।');
     }

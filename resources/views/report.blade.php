@@ -20,7 +20,9 @@ button{margin-top:16px;width:100%;padding:11px;border:0;border-radius:8px;backgr
 @if (session('ok'))<p class="ok">{{ session('ok') }}</p>@endif
 @if ($errors->any())<p class="er">{{ $errors->first() }}</p>@endif
 
-<form method="POST" action="{{ route('report.store', $asset->code) }}">
+
+{{--for photo upload--}}
+<form method="POST" action="{{ route('report.store', $asset->code) }}" enctype="multipart/form-data">
 @csrf
 <label>আপনার নাম (ঐচ্ছিক)<input name="reporter" maxlength="60" value="{{ old('reporter') }}"></label>
 <label>সমস্যা কী?<textarea name="issue" rows="4" maxlength="300" required>{{ old('issue') }}</textarea></label>
@@ -28,6 +30,8 @@ button{margin-top:16px;width:100%;padding:11px;border:0;border-radius:8px;backgr
 <select name="priority">
 @foreach (['Low','Medium','High'] as $p)<option @selected(old('priority', 'Medium') === $p)>{{ $p }}</option>@endforeach
 </select></label>
+{{-- 🚨 Add this line --}}
+<label>ছবি (ঐচ্ছিক)<input type="file" name="photo" accept="image/*"></label>
 <button>Submit issue</button>
 </form>
 </div></body></html>

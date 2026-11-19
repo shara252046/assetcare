@@ -14,19 +14,15 @@ class AssetController extends Controller
 {
     public function index()
     {
-
-//added for warrenty alert
-    $expiring = Asset::whereBetween('warranty_end', [
+        $expiring = Asset::whereBetween('warranty_end', [
             today()->toDateString(),
             today()->addDays(30)->toDateString(),
         ])->count();
 
-
-//added for qr issue report
         return view('admin', [
             'assets' => Asset::orderBy('code')->get(),
             'tickets' => Ticket::with('asset')->latest()->get(),
-            'expiring' => $expiring, //added for warrenty alert
+            'expiring' => $expiring,
         ]);
     }
 
@@ -35,7 +31,7 @@ class AssetController extends Controller
         $data = $request->validate([
             'name' => 'required|string|max:60',
             'category' => 'required|in:AC,Computer,Printer,Vehicle',
-              'warranty_end' => 'nullable|date',//added for warrenty alert
+            'warranty_end' => 'nullable|date',
         ]);
 
         $prefix = ['AC' => 'AC', 'Computer' => 'PC', 'Printer' => 'PR', 'Vehicle' => 'VH'][$data['category']];
@@ -45,11 +41,17 @@ class AssetController extends Controller
             $n++;
         } while (Asset::where('code', $code)->exists());
 
-        Asset::create(['code' => $code, 'name' => $data['name'], 'category' => $data['category'],'warranty_end' => $data['warranty_end'] ?? null,]);
+        Asset::create([
+            'code' => $code, 
+            'name' => $data['name'], 
+            'category' => $data['category'],
+            'warranty_end' => $data['warranty_end'] ?? null,
+        ]);
 
         return back()->with('ok', "Asset $code is added");
     }
 
+    // 🚨 FIX 1: Dead code removed from qr()
     public function qr(Request $request, Asset $asset)
     {
         $base = rtrim(config('assetcare.base_url') ?: $request->getSchemeAndHttpHost(), '/');
@@ -59,18 +61,25 @@ class AssetController extends Controller
         $svg = (new Writer($renderer))->writeString($url);
 
         return response($svg, 200, ['Content-Type' => 'image/svg+xml']);
-
-
-        // Warranty তারিখ বদলালে Email Alert আবার পাঠানোর যোগ্য হবে
-        if ($asset->isDirty('warranty_end')) {
-            $asset->warranty_notified_at = null;
-        }
- 
-        $asset->save();
- 
-        return back()->with('ok', "Asset {$asset->code} আপডেট হয়েছে।");
     }
 
+    // 🚨 FIX 2: New update() method added
+    public function update(Request $request, Asset $asset)
+    {
+        $data = $request->validate([
+            'name' => 'required|string|max:60',
+            'warranty_end' => 'nullable|date',
+        ]);
+
+        // Warranty তারিখ বদলালে Email Alert আবার পাঠানোর যোগ্য হবে
+        if (array_key_exists('warranty_end', $data) && $data['warranty_end'] != $asset->warranty_end?->format('Y-m-d')) {
+            $asset->warranty_notified_at = null;
+        }
+
+        $asset->update($data);
+
+        return back()->with('ok', "Asset {$asset->code} আপডেট হয়েছে।");
+    }
 
     public function destroy(Asset $asset)
     {
