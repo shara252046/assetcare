@@ -7,6 +7,7 @@ use App\Http\Controllers\WarrantyController;
 use App\Http\Controllers\MaintenanceController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TechnicianController;
+use App\Http\Controllers\AssetHistoryController;
 use Illuminate\Support\Facades\Route;
 
 // Public (without Login): QR Scan, Issue Report
@@ -61,4 +62,8 @@ Route::middleware('admin')->group(function () {
     Route::get('/technicians', [TechnicianController::class, 'index'])->name('technicians.index');
     Route::post('/technicians', [TechnicianController::class, 'store'])->name('technicians.store');
     Route::delete('/technicians/{technician}', [TechnicianController::class, 'destroy'])->name('technicians.destroy');
+
+
+// history service er jonno use  hoyeche
+    Route::get('/assets/{asset:code}/history', [AssetHistoryController::class, 'show'])->name('assets.history');
 });

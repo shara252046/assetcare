@@ -53,6 +53,7 @@ table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:8px 6px;b
 <div class="q">
 <img src="{{ route('assets.qr', $a->code) }}" alt="QR {{ $a->code }}">
 <div>{{ $a->name }}</div><div class="s">{{ $a->code }}</div>
+<div class="np" style="margin:6px 0"><a href="{{ route('assets.history', $a->code) }}">Service History</a></div>
 <form method="POST" action="{{ route('assets.update', $a->code) }}" class="np" style="margin-top:8px">
 @csrf @method('PATCH')
 <input name="name" value="{{ $a->name }}" maxlength="60" required style="width:100%;margin-bottom:6px;box-sizing:border-box">
