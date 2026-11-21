@@ -6,6 +6,7 @@ use App\Http\Controllers\TicketController;
 use App\Http\Controllers\WarrantyController;
 use App\Http\Controllers\MaintenanceController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\TechnicianController;
 use Illuminate\Support\Facades\Route;
 
 // Public (without Login): QR Scan, Issue Report
@@ -51,4 +52,13 @@ Route::middleware('admin')->group(function () {
 
     // for warranty alert use this
      Route::get('/warranty', [WarrantyController::class, 'index'])->name('warranty.index');
+
+
+
+
+     //for ticket update(ticket sysytem make korar time a use kore hoyeche)
+    Route::get('/tickets/{ticket}', [TicketController::class, 'show'])->name('tickets.show');
+    Route::get('/technicians', [TechnicianController::class, 'index'])->name('technicians.index');
+    Route::post('/technicians', [TechnicianController::class, 'store'])->name('technicians.store');
+    Route::delete('/technicians/{technician}', [TechnicianController::class, 'destroy'])->name('technicians.destroy');
 });

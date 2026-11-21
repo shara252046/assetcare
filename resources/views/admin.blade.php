@@ -21,7 +21,13 @@ table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:8px 6px;b
 </head>
 <body><div class="w">
 <h1>AssetCare</h1>
-<div class="nav np"><a href="{{ route('dashboard') }}">Dashboard</a><a href="{{ route('admin.home') }}">Assets ও Tickets</a><a href="{{ route('warranty.index') }}">Warranty</a><a href="{{ route('maintenance.index') }}">Maintenance</a></div>
+<div class="nav np">
+<a href="{{ route('dashboard') }}">Dashboard</a>
+<a href="{{ route('admin.home') }}">Assets ও Tickets</a>
+<a href="{{ route('warranty.index') }}">Warranty</a>
+<a href="{{ route('maintenance.index') }}">Maintenance</a>
+<a href="{{ route('technicians.index') }}">Technicians</a>
+</div>
 
 @if (session('ok'))<p class="ok np">{{ session('ok') }}</p>@endif
 @if ($errors->any())<p class="er np">{{ $errors->first() }}</p>@endif
@@ -46,9 +52,6 @@ table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:8px 6px;b
 @foreach ($assets as $a)
 <div class="q">
 <img src="{{ route('assets.qr', $a->code) }}" alt="QR {{ $a->code }}">
-
-
-
 <div>{{ $a->name }}</div><div class="s">{{ $a->code }}</div>
 <form method="POST" action="{{ route('assets.update', $a->code) }}" class="np" style="margin-top:8px">
 @csrf @method('PATCH')
@@ -62,30 +65,31 @@ table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:8px 6px;b
 </form>
 </div>
 @endforeach
-
-
-
 </div></div>
 
 <div class="c np"><b>Tickets (QR দিয়ে আসা Issue)</b><br><br>
 <div class="t"><table>
-<tr><th>ID</th><th>Asset</th><th>Issue</th><th>Reporter</th><th>Priority</th><th>Status</th></tr>
+<tr><th>ID</th><th>Asset</th><th>Issue</th><th>Reporter</th><th>Priority</th><th>Technician</th><th>Status</th><th>Action</th></tr>
 @forelse ($tickets as $t)
 <tr>
-<td>{{ $t->ticket_no }}</td><td>{{ $t->asset->name }}</td><td>{{ $t->issue }}</td>
-<td>{{ $t->reporter }}</td><td>{{ $t->priority }}</td>
+<td>{{ $t->ticket_no }}</td>
+<td>{{ $t->asset->name }}</td>
+<td>{{ $t->issue }}</td>
+<td>{{ $t->reporter }}</td>
+<td>{{ $t->priority }}</td>
+<td>{{ $t->technician?->name ?? 'Unassigned' }}</td>
 <td>
 <form method="POST" action="{{ route('tickets.update', $t->id) }}">
 @csrf @method('PATCH')
-
 <select name="status" onchange="this.form.submit()">
 @foreach (['Open','In Progress','Resolved'] as $s)<option @selected($t->status === $s)>{{ $s }}</option>@endforeach
 </select>
 </form>
 </td>
+<td><a href="{{ route('tickets.show', $t->id) }}" style="color:#2563eb;">Details</a></td>
 </tr>
 @empty
-<tr><td colspan="6">এখনো কোনো Ticket নেই</td></tr>
+<tr><td colspan="8">এখনো কোনো Ticket নেই</td></tr>
 @endforelse
 </table></div></div>
 </div></body></html>

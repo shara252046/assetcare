@@ -8,7 +8,22 @@ use Illuminate\Support\Facades\DB;
 
 class Ticket extends Model
 {
-    protected $fillable = ['ticket_no', 'asset_id', 'issue', 'reporter', 'priority', 'status','source'];
+
+// ticket system make korar time a use hoi
+    protected $fillable = [
+        'ticket_no', 'asset_id', 'issue', 'reporter', 'priority', 'status', 'source',
+        'technician_id', 'technician_note', 'cost', 'resolved_at',
+    ];
+
+    protected function casts(): array
+    {
+        return [
+            'cost' => 'decimal:2',
+            'resolved_at' => 'datetime',
+        ];
+    }
+
+    //ai porjonto ticket system.
 
     public function asset(): BelongsTo
     {

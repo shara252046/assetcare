@@ -19,7 +19,13 @@ button{background:#2563eb;color:#fff;border:0;cursor:pointer}
 </head>
 <body><div class="w">
 <h1>AssetCare</h1>
-<div class="nav"><a href="{{ route('dashboard') }}">Dashboard</a><a href="{{ route('admin.home') }}">Assets ও Tickets</a><a href="{{ route('warranty.index') }}">Warranty</a><a href="{{ route('maintenance.index') }}">Maintenance</a></div>
+<div class="nav">
+<a href="{{ route('dashboard') }}">Dashboard</a>
+<a href="{{ route('admin.home') }}">Assets ও Tickets</a>
+<a href="{{ route('warranty.index') }}">Warranty</a>
+<a href="{{ route('maintenance.index') }}">Maintenance</a>
+<a href="{{ route('technicians.index') }}">Technicians</a>
+</div>
 
 @if (session('ok'))<p class="ok">{{ session('ok') }}</p>@endif
 @if ($errors->any())<p class="er">{{ $errors->first() }}</p>@endif

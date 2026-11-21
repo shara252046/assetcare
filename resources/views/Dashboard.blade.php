@@ -30,7 +30,11 @@ a.btn.o,button.o{background:#fff;color:#2563eb;border:1px solid #2563eb}
 <body><div class="w">
 <h1>AssetCare</h1>
 <div class="nav">
-<a href="{{ route('dashboard') }}">Dashboard</a><a href="{{ route('admin.home') }}">Assets ও Tickets</a><a href="{{ route('warranty.index') }}">Warranty</a><a href="{{ route('maintenance.index') }}">Maintenance</a>
+<a href="{{ route('dashboard') }}">Dashboard</a>
+<a href="{{ route('admin.home') }}">Assets ও Tickets</a>
+<a href="{{ route('warranty.index') }}">Warranty</a>
+<a href="{{ route('maintenance.index') }}">Maintenance</a>
+<a href="{{ route('technicians.index') }}">Technicians</a>
 </div>
 
 @if (session('ok'))<p class="ok">{{ session('ok') }}</p>@endif
