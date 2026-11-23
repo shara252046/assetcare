@@ -42,17 +42,34 @@ a.btn.o,button.o{background:#fff;color:#2563eb;border:1px solid #2563eb}
 <h2 style="margin:16px 0 2px">Welcome Back, Admin!</h2>
 <p class="s" style="margin:0">{{ now()->format('d M Y') }} · Here’s an overview of your asset management system.</p>
 
+<!-- 🚨 FIX: A tag gulo thikmoto close kora hoyeche -->
 <div class="cards">
-<a class="card" href="{{ route('admin.home') }}"><div class="s">01 · Total Assets</div><div class="big">{{ $stats['total'] }}</div><div class="s">System-এ থাকা সব Asset</div></a>
-<a class="card {{ $stats['open'] > 0 ? 'warn' : '' }}" href="{{ route('admin.home') }}"><div class="s">02 · Open Tickets</div><div class="big">{{ $stats['open'] }}</div><div class="s">এখনো সমাধান হয়নি এমন Ticket</div></a>
-<a class="card {{ $stats['overdue'] > 0 ? 'hot' : '' }}" href="{{ route('maintenance.index') }}"><div class="s">03 · Overdue Maintenance</div><div class="big">{{ $stats['overdue'] }}</div><div class="s">Service Due Date পার হয়েছে</div></a>
-<a class="card {{ $stats['warranty'] > 0 ? 'warn' : '' }}" href="{{ route('warranty.index') }}"><div class="s">04 · Warranty Expiring Soon</div><div class="big">{{ $stats['warranty'] }}</div><div class="s">পরবর্তী ৩০ দিনে Warranty শেষ</div></a>
+    <a class="card" href="{{ route('admin.home') }}">
+        <div class="s">Total Assets</div>
+        <div class="big">{{ $stats['total'] }}</div>
+    </a>
+    <a class="card {{ $stats['open'] > 0 ? 'warn' : '' }}" href="{{ route('admin.home') }}">
+        <div class="s">Open Tickets</div>
+        <div class="big">{{ $stats['open'] }}</div>
+    </a>
+    <a class="card {{ $stats['overdue'] > 0 ? 'hot' : '' }}" href="{{ route('maintenance.index') }}">
+        <div class="s">Overdue Maintenance</div>
+        <div class="big">{{ $stats['overdue'] }}</div>
+    </a>
+    <a class="card {{ $stats['warranty'] > 0 ? 'warn' : '' }}" href="{{ route('warranty.index') }}">
+        <div class="s">Warranty Expiring Soon</div>
+        <div class="big">{{ $stats['warranty'] }}</div>
+    </a>
 </div>
 
+<!-- 🚨 FIX: Button gulo thik jaygay bosano hoyeche (gap remove kora hoyeche) -->
 <div class="qa">
-<a class="btn" href="{{ route('admin.home') }}">+ Add New Asset</a>
-<a class="btn o" href="{{ route('maintenance.index') }}">Schedule Maintenance</a>
-<form method="POST" action="{{ route('maintenance.run') }}">@csrf<button class="o">Maintenance check চালান</button></form>
+    <a class="btn" href="{{ route('admin.home') }}">+ Add New Asset</a>
+    <a class="btn o" href="{{ route('maintenance.index') }}">Schedule Maintenance</a>
+    <form method="POST" action="{{ route('maintenance.run') }}" style="margin:0;">
+        @csrf
+        <button class="o">Maintenance check চালান</button>
+    </form>
 </div>
 
 <div class="g2">
