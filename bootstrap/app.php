@@ -12,7 +12,7 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        $middleware->alias(['admin' => \App\Http\Middleware\AdminBasic::class]);
+        //$middleware->alias(['admin' => \App\Http\Middleware\AdminBasic::class]); aita kora hoyechilo,AdminBasic (Browser er popup) system er jonno. to aita remove kore custom login page make kora hoyeche
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->shouldRenderJsonWhen(
