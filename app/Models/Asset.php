@@ -40,6 +40,11 @@ class Asset extends Model
         return (int) round(today()->diffInDays($this->warranty_end->copy()->startOfDay(), false));
     }
 
+
+
+    // for Maintenance Schedule + Auto Ticket
+
+    
     // porer service koto din baki 
     public function serviceDaysLeft(): ?int
     {

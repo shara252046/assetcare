@@ -112,6 +112,7 @@ tr:hover td { background: var(--table-hover); }
         <a href="{{ route('warranty.index') }}">Warranty</a>
         <a href="{{ route('maintenance.index') }}">Maintenance</a>
         <a href="{{ route('technicians.index') }}" class="active">Technicians</a>
+        
         <button id="theme-toggle" class="theme-btn" title="Toggle Theme">🌙</button>
     </div>
 </nav>

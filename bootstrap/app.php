@@ -11,6 +11,11 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
     )
+
+    ->withCommands([
+        \App\Console\Commands\CheckMaintenance::class,
+        \App\Console\Commands\SendWarrantyAlerts::class,
+    ])
     ->withMiddleware(function (Middleware $middleware): void {
         //$middleware->alias(['admin' => \App\Http\Middleware\AdminBasic::class]); aita kora hoyechilo,AdminBasic (Browser er popup) system er jonno. to aita remove kore custom login page make kora hoyeche
     })

@@ -54,6 +54,6 @@ Route::middleware('auth')->group(function () {
 
     // Technicians
     Route::get('/technicians', [TechnicianController::class, 'index'])->name('technicians.index');
-    Route::post('/technicians', [TechnicianController::class, 'store'])->name('technicians.store');
+    Route::post('/technicians', [TechnicianController::class, 'store'])->name('technicians.store'); //technician er name, email, phone store kore;
     Route::delete('/technicians/{technician}', [TechnicianController::class, 'destroy'])->name('technicians.destroy');
 });

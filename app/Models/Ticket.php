@@ -35,7 +35,12 @@ class Ticket extends Model
     public static function createNumbered(array $attributes): self
 {
     return DB::transaction(function () use ($attributes) {
+        //  Fix: Create korar somoy ekta temporary ticket_no diye dicchi
+        $attributes['ticket_no'] = 'TMP-' . uniqid(); 
+        
         $ticket = static::create($attributes);
+        
+        // Tarpor original format e update korchi
         $ticket->update(['ticket_no' => 'T-' . (100 + $ticket->id)]);
 
         return $ticket;

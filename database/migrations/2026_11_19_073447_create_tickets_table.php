@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('tickets', function (Blueprint $table) {
             $table->id();
-            $table->string('ticket_no', 20)->unique();
+            $table->string('ticket_no', 20)->nullable()->unique();
             
             $table->foreignId('asset_id')
                 ->constrained('assets')

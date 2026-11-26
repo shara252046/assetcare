@@ -22,7 +22,7 @@ return new class extends Migration
             // Foreign Key add kora holo (constrained)
             $table->foreignId('technician_id')->nullable()->constrained('technicians')->nullOnDelete();
             $table->text('technician_note')->nullable();
-            // $table->decimal('cost', 12, 2)->nullable();  <-- 🚨 EI LINE TA BAD DIYE DILAM (Karon create_tickets_table e ache)
+            
             $table->timestamp('resolved_at')->nullable();
         });
     }
